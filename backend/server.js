@@ -12,6 +12,8 @@ server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
+
+//Connect to DB
 mongoose
   .connect(DB_URI)
   .then(() => {
@@ -27,6 +29,7 @@ server.get("/", (request, response) => {
   response.send("LIVE!");
 });
 
+//Display products
 server.get("/products", async (request, response) => {
   try {
     await Product.find().then((result) => response.status(200).send(result));
@@ -35,6 +38,7 @@ server.get("/products", async (request, response) => {
   }
 });
 
+//Add product
 server.post("/add-product", async (request, response) => {
   const { productName, brand, image, price } = request.body;
   const id = crypto.randomUUID();
@@ -46,6 +50,7 @@ server.post("/add-product", async (request, response) => {
     id,
   });
 
+  //Server's response to product being added
   try {
     await product
       .save()
@@ -57,8 +62,10 @@ server.post("/add-product", async (request, response) => {
   }
 });
 
+//Delete product
 server.delete("/products/:id", async (request, response) => {
   const { id } = request.params;
+  //Server's response to item being deleted
   try {
     await Product.findByIdAndDelete(id).then((result) => {
       console.log(result);
@@ -69,10 +76,13 @@ server.delete("/products/:id", async (request, response) => {
   }
 });
 
+//Edit a product
 server.patch("/products/:id", async (request, response) => {
   const prodId = request.params.id;
   const { productName, brand, image, price, id } = request.body;
 
+
+  //Server's response to item being editted
   try {
     await Product.findByIdAndUpdate(prodId, {
       productName,
