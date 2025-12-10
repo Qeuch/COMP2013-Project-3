@@ -41,6 +41,8 @@ export default function RegisterPage() {
         postResponse={postResponse}
         handleOnChange={handleOnChange}
         handleOnSubmit={handleOnSubmit}
+        handleLogin={null}
+        handleRegister={handleRegister}
         nextPage="login"
         currentPage="create-user"
       />
