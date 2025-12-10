@@ -1,21 +1,37 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-function Authorized({user}) {
+function Authorized({children, role}) {
     const navigate = useNavigate();
+    const [loading, setLoading] =useState(true);
+    const [userRole, setUserRole] = useState(null);
 
     const isLoggedIn = localStorage.getItem("user") !== null;
 
     useEffect(() => {
-        if (!isLoggedIn) {
+        fetch("", {
+            method: "GET",
+            credentials: "include"
+        })
+        .then(res=>res.json())
+        .then(data => {
+            if(!data.success){
+                navigate("/not-authorized");
+                return;
+            }
+            setUserRole(data.role);
+            setLoading(false);
+        })
+        .catch(() => {
             navigate("/not-authorized");
-        }
-    },
-        [isLoggedIn, navigate]);
+        });
+    }, [navigate]);
 
-        if (!isLoggedIn) return null;
-
-        return children;
+    if (role && userRole !== role){
+        navigate("/not-authorized");
+        return null;
+    }
+    return children;
 }
 
 export default Authorized;

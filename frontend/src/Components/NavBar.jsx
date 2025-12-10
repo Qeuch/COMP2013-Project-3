@@ -1,4 +1,12 @@
-export default function NavBar({ quantity }) {
+import { useNavigate } from "react-router-dom";
+
+export default function NavBar({ quantity, isEditing }) {
+  const navigate = useNavigate();
+
+  const goToForm = () => {
+    navigate("/ProductForm", setIsEditing(true));
+  };
+
   return (
     <nav className="NavBar">
       <div className="NavDiv NavUser">
@@ -6,8 +14,7 @@ export default function NavBar({ quantity }) {
       </div>
       <div className="NavDiv NavTitle">
         <h2>Groceries App 🍎</h2>
-        {/* If admin view, show this button */}
-        <button>Add New Product</button>
+        {isAdmin ? <button onClick={goToForm()}>Add new product</button> : null}
       </div>
       <div className="NavDiv NavCart">
         <img

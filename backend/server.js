@@ -5,13 +5,15 @@ const port = 3000;
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Product = require("./models/product");
+const User = require("./models/user");
 require("dotenv").config();
 const { DB_URI } = process.env;
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
-
 
 //Connect to DB
 mongoose
@@ -30,15 +32,43 @@ server.get("/", (request, response) => {
 });
 
 //Display products
+server.get("/main", (request, response) => {
+  response.send("LIVE!");
+});
+
+server.get("/not-authorized", (request, response) => {
+  response.status(401);
+  response.send("NOT AUTHORIZED!");
+});
+
 server.get("/products", async (request, response) => {
+  console.log("GET /products hit");
   try {
     await Product.find().then((result) => response.status(200).send(result));
+    console.log(result);
   } catch (error) {
     console.log(error.message);
   }
 });
 
 //Add product
+server.get("*", (request, response) => {
+  response.status(401);
+  response.send("NO SUCH PAGE!");
+});
+
+server.post("/create-user", async (request, response) => {
+  const { username, password } = request.body;
+  const id = crypto.randomUUID();
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  const user = new User({
+    id,
+    username,
+    hashedPassword,
+  });
+});
+
 server.post("/add-product", async (request, response) => {
   const { productName, brand, image, price } = request.body;
   const id = crypto.randomUUID();
@@ -52,13 +82,10 @@ server.post("/add-product", async (request, response) => {
 
   //Server's response to product being added
   try {
-    await product
-      .save()
-      .then((result) =>
-        response.status(201).send(`${productName} added\nwith id: ${id}`)
-      );
+    await newUser.save();
+    response.status(201).json({ message: "User added successfully" });
   } catch (error) {
-    console.log(error.message);
+    response.status(400).json({ message: error.message });
   }
 });
 
@@ -76,11 +103,9 @@ server.delete("/products/:id", async (request, response) => {
   }
 });
 
-//Edit a product
-server.patch("/products/:id", async (request, response) => {
+server.patch("/edit-product/:id", async (request, response) => {
   const prodId = request.params.id;
   const { productName, brand, image, price, id } = request.body;
-
 
   //Server's response to item being editted
   try {
@@ -95,5 +120,31 @@ server.patch("/products/:id", async (request, response) => {
     );
   } catch (error) {
     console.log(error.message);
+  }
+});
+
+//Login existing user route
+server.post("/login", async (request, response) => {
+  const { username, password } = request.body;
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return response.status(404).send({ message: "User does not exist" });
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return response
+        .status(403)
+        .send({ message: "Incorrect username or password" });
+    }
+
+    const jwtToken = jwt.sign({ id: user._id, username }, SECRET_KEY);
+    return response
+      .status(201)
+      .send({ message: "User Authenticated", token: jwtToken });
+  } catch (error) {
+    response.status(500).send({ message: error.message });
   }
 });
