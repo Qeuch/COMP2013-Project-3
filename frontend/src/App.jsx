@@ -13,17 +13,16 @@ function App() {
   return (
     <>
       <Router>
-        <Routes> 
-          <Route path="/" element={<HomePage/>} />
-          <Route path="create-user" element={<CreateUser/>} />
-          <Route path="main" element={<Main/>} />
-          <Route path="add-product" element={<AddProduct/>} />
-          <Route path="edit-product" element={<EditProduct/>} />
-          <Route path="not-authorized" element={<NotAuthorized/>} />
-          <Route path="*" element={<PageNotFound/>} />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/create-user" element={<CreateUser />} />
+          <Route path="/main" element={<Main />} />
+          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/edit-product" element={<EditProduct />} />
+          <Route path="/not-authorized" element={<NotAuthorized />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
-      
     </>
   );
 }
