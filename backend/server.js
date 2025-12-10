@@ -9,6 +9,7 @@ const User = require("./models/user");
 require("dotenv").config();
 const { DB_URI } = process.env;
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 server.use(cors());
 server.use(express.json());
@@ -119,5 +120,31 @@ server.patch("/edit-product/:id", async (request, response) => {
     );
   } catch (error) {
     console.log(error.message);
+  }
+});
+
+//Login existing user route
+server.post("/login", async (request, response) => {
+  const { username, password } = request.body;
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return response.status(404).send({ message: "User does not exist" });
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return response
+        .status(403)
+        .send({ message: "Incorrect username or password" });
+    }
+
+    const jwtToken = jwt.sign({ id: user._id, username }, SECRET_KEY);
+    return response
+      .status(201)
+      .send({ message: "User Authenticated", token: jwtToken });
+  } catch (error) {
+    response.status(500).send({ message: error.message });
   }
 });
