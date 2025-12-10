@@ -46,9 +46,11 @@ export default function LoginPage(){
         postResponse={postResponse} 
         handleOnChange={handleOnChange} 
         handleOnSubmit={handleOnSubmit}
-        nextPage="register"
+        nextPage="create-user"
         currentPage="login"
-
         />
+        
+        <p>Not a Member? Click <a href="/create-user">here</a> to join.</p>
+
     </div>
 } 
