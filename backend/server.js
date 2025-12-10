@@ -33,6 +33,26 @@ server.get("/main", (request, response) => {
   response.send("LIVE!");
 });
 
+server.get("/not-authorized", (request, response) => {
+  response.status(401);
+  response.send("NOT AUTHORIZED!")
+});
+
+server.get("/products", async (request, response) => {
+  console.log("GET /products hit");
+  try {
+    await Product.find().then((result) => response.status(200).send(result));
+    console.log(result);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+server.get("*", (request, response) => {
+  response.status(401);
+  response.send("NO SUCH PAGE!")
+});
+
 server.post("/create-user", async (request, response) => {
   const { username, password } = request.body;
   const id = crypto.randomUUID();
@@ -89,25 +109,6 @@ server.patch("/edit-product/:id", async (request, response) => {
     }).then((result) =>
       response.status(200).send(`${productName} edited\nwith id: ${prodId}`)
     );
-  } catch (error) {
-    console.log(error.message);
-  }
-});
-
-server.get("/not-authorized", (request, response) => {
-  response.status(401);
-  response.send("NOT AUTHORIZED!")
-});
-
-server.get("*", (request, response) => {
-  response.status(401);
-  response.send("NO SUCH PAGE!")
-});
-
-
-server.get("/products", async (request, response) => {
-  try {
-    await Product.find().then((result) => response.status(200).send(result));
   } catch (error) {
     console.log(error.message);
   }
