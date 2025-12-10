@@ -57,16 +57,25 @@ server.get("*", (request, response) => {
   response.send("NO SUCH PAGE!");
 });
 
+//Register new user route
 server.post("/create-user", async (request, response) => {
   const { username, password } = request.body;
-  const id = crypto.randomUUID();
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  const user = new User({
-    id,
-    username,
-    hashedPassword,
-  });
+  try {
+    //Hashing a password need bcrypt and salt rounds as an int
+    const id = crypto.randomUUID();
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      id,
+      username,
+      password: hashedPassword,
+    });
+    await newUser.save();
+    response.send({ message: "User Created!" });
+  } catch (error) {
+    response
+      .status(500)
+      .send({ message: "User Already Exists, please find another username" });
+  }
 });
 
 server.post("/add-product", async (request, response) => {
