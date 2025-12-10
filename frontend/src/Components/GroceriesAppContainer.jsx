@@ -200,15 +200,20 @@ export default function GroceriesAppContainer() {
   // this stuff might need to be changed with routes in mind
   return (
     <div>
-      <NavBar quantity={cartList.length} />
+      <NavBar
+        quantity={cartList.length}
+        handleOnSubmit={handleOnSubmit}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+      />
       <div className="GroceriesApp-Container">
-        <ProductForm
+        {/* <ProductForm
           handleOnSubmit={handleOnSubmit}
           postResponse={postResponse}
           handleOnChange={handleOnChange}
           formData={formData}
           isEditing={isEditing}
-        />
+        /> */}
         <ProductsContainer
           products={productList}
           handleAddQuantity={handleAddQuantity}

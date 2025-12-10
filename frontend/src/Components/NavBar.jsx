@@ -1,10 +1,18 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function NavBar({ quantity, isEditing }) {
+export default function NavBar({
+  quantity,
+  isEditing,
+  setIsEditing,
+  handleOnSubmit,
+  isAdmin,
+}) {
   const navigate = useNavigate();
 
   const goToForm = () => {
-    navigate("/ProductForm", setIsEditing(true));
+    setIsEditing(false);
+    navigate("/ProductForm", { state: { isEditing, handleOnSubmit } });
   };
 
   return (

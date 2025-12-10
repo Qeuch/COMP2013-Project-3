@@ -20,15 +20,15 @@ function App() {
           <Route
             path="/main"
             element={
-              <Authorized role='admin'>
-                <GroceriesAppContainer />
-              </Authorized>
+              //<Authorized role='admin'>
+              <GroceriesAppContainer />
+              //</Authorized>
             }
           />
           <Route
             path="/add-product"
             element={
-              <Authorized role ="admin">
+              <Authorized role="admin">
                 <ProductForm />
               </Authorized>
             }
@@ -36,7 +36,7 @@ function App() {
           <Route
             path="/edit-product/:id"
             element={
-              <Authorized role ="admin">
+              <Authorized role="admin">
                 <ProductForm />
               </Authorized>
             }
