@@ -5,8 +5,8 @@ import GroceriesAppContainer from "./Components/GroceriesAppContainer";
 import LoginPage from "./Components/LoginPage.jsx";
 import RegisterPage from "./Components/RegisterPage.jsx";
 import ProductForm from "./Components/ProductForm.jsx";
-//import NotAuthorized from "./Components/NotAuthorized.jsx";
-//import PageNotFound from "./Components/PageNotFound.jsx";
+import NotAuthorized from "./Components/NotAuthorized.jsx";
+import PageNotFound from "./Components/PageNotFound.jsx";
 import Authorized from "./Components/Authorized.jsx";
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
           <Route
             path="/main"
             element={
-              <Authorized>
+              <Authorized role='admin'>
                 <GroceriesAppContainer />
               </Authorized>
             }
