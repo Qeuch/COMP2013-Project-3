@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GroceriesAppContainer from "./Components/GroceriesAppContainer";
 import HomePage from ".Components/HomePage.jsx";
 import CreateUser from ".Components/CreateUser.jsx";
-import AddProduct from ".Components/ProductForm.jsx";
-import EditProduct from ".Components/ProductForm.jsx";
+import ProductForm from ".Components/ProductForm.jsx";
 import NotAuthorized from ".Components/NotAuthorized.jsx";
 import PageNotFound from ".Components/PageNotFound.jsx";
 
