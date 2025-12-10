@@ -5,8 +5,10 @@ const port = 3000;
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Product = require("./models/product");
+const User = require("./models/user");
 require("dotenv").config();
 const { DB_URI } = process.env;
+const bcrypt = require("bcrypt");
 
 server.use(cors());
 server.use(express.json());
@@ -27,12 +29,20 @@ server.get("/", (request, response) => {
   response.send("LIVE!");
 });
 
-server.get("/products", async (request, response) => {
-  try {
-    await Product.find().then((result) => response.status(200).send(result));
-  } catch (error) {
-    console.log(error.message);
-  }
+server.get("/main", (request, response) => {
+  response.send("LIVE!");
+});
+
+server.post("/create-user", async (request, response) => {
+  const { username, password } = request.body;
+  const id = crypto.randomUUID();
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  const user = new User({
+    id,
+    username,
+    hashedPassword,
+  });
 });
 
 server.post("/add-product", async (request, response) => {
@@ -45,15 +55,11 @@ server.post("/add-product", async (request, response) => {
     image,
     id,
   });
-
   try {
-    await product
-      .save()
-      .then((result) =>
-        response.status(201).send(`${productName} added\nwith id: ${id}`)
-      );
+    await newUser.save();
+    response.status(201).json({ message: "User added successfully" });
   } catch (error) {
-    console.log(error.message);
+    response.status(400).json({ message: error.message });
   }
 });
 
@@ -69,7 +75,7 @@ server.delete("/products/:id", async (request, response) => {
   }
 });
 
-server.patch("/products/:id", async (request, response) => {
+server.patch("/edit-product/:id", async (request, response) => {
   const prodId = request.params.id;
   const { productName, brand, image, price, id } = request.body;
 
@@ -87,3 +93,24 @@ server.patch("/products/:id", async (request, response) => {
     console.log(error.message);
   }
 });
+
+server.get("/not-authorized", (request, response) => {
+  response.status(401);
+  response.send("NOT AUTHORIZED!")
+});
+
+server.get("*", (request, response) => {
+  response.status(401);
+  response.send("NO SUCH PAGE!")
+});
+
+
+server.get("/products", async (request, response) => {
+  try {
+    await Product.find().then((result) => response.status(200).send(result));
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+
