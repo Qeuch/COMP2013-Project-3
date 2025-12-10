@@ -1,11 +1,10 @@
 import "./App.css";
-//import products from "./data/products";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GroceriesAppContainer from "./Components/GroceriesAppContainer";
 import HomePage from ".Components/HomePage.jsx";
 import CreateUser from ".Components/CreateUser.jsx";
-import Main from ".Components/Main.jsx";
-import AddProduct from ".Components/AddProduct.jsx";
-import EditProduct from ".Components/EditProduct.jsx";
+import AddProduct from ".Components/ProductForm.jsx";
+import EditProduct from ".Components/ProductForm.jsx";
 import NotAuthorized from ".Components/NotAuthorized.jsx";
 import PageNotFound from ".Components/PageNotFound.jsx";
 
@@ -15,11 +14,11 @@ function App() {
       <Router>
         <Routes> 
           <Route path="/" element={<HomePage/>} />
-          <Route path="create-user" element={<CreateUser/>} />
-          <Route path="main" element={<Main/>} />
-          <Route path="add-product" element={<AddProduct/>} />
-          <Route path="edit-product" element={<EditProduct/>} />
-          <Route path="not-authorized" element={<NotAuthorized/>} />
+          <Route path="/create-user" element={<CreateUser/>} />
+          <Route path="/main" element={<GroceriesAppContainer/>} />
+          <Route path="/add-product" element={<ProductForm/>} />
+          <Route path="/edit-product" element={<ProductForm/>} />
+          <Route path="/not-authorized" element={<NotAuthorized/>} />
           <Route path="*" element={<PageNotFound/>} />
         </Routes>
       </Router>
