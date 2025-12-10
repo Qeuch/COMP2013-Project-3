@@ -15,7 +15,7 @@ function Authorized({user}) {
 
         if (!isLoggedIn) return null;
 
-        return children;
+        return user;
 }
 
 export default Authorized;

@@ -28,7 +28,7 @@ function App() {
           <Route
             path="/add-product"
             element={
-              <Authorized>
+              <Authorized role ="admin">
                 <ProductForm />
               </Authorized>
             }
@@ -36,7 +36,7 @@ function App() {
           <Route
             path="/edit-product/:id"
             element={
-              <Authorized>
+              <Authorized role ="admin">
                 <ProductForm />
               </Authorized>
             }
