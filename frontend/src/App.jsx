@@ -14,8 +14,17 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/create-user" element={<RegisterPage />} />
+
+          <Route 
+          path="/"
+          element={
+          <LoginPage />
+          } />
+
+          <Route 
+          path="/create-user" 
+          element={<RegisterPage />
+          } />
 
           <Route
             path="/main"
@@ -42,8 +51,15 @@ function App() {
             }
           />
 
-          <Route path="/not-authorized" element={<NotAuthorized />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route 
+          path="/not-authorized" 
+          element={<NotAuthorized />
+
+          } />
+          <Route 
+          path="*" 
+          element={<PageNotFound />
+          } />
         </Routes>
       </Router>
     </>

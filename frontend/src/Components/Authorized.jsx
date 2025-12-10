@@ -9,7 +9,7 @@ function Authorized({children, role}) {
    // const isLoggedIn = localStorage.getItem("user") !== null;
 
     useEffect(() => {
-        fetch("http://localhost:3000/check-auth", {
+        fetch("http://localhost:5173/check-auth", {
             method: "GET",
             credentials: "include"
         })
