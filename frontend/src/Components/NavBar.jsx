@@ -22,7 +22,7 @@ export default function NavBar({
       </div>
       <div className="NavDiv NavTitle">
         <h2>Groceries App 🍎</h2>
-        {isAdmin ? <button onClick={goToForm()}>Add new product</button> : null}
+        {isAdmin ? <button onClick={goToForm}>Add new product</button> : null}
       </div>
       <div className="NavDiv NavCart">
         <img

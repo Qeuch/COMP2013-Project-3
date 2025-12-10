@@ -29,7 +29,7 @@ function App() {
             path="/add-product"
             element={
               <Authorized role="admin">
-                <ProductForm />
+                <ProductForm handleOnSubmit={handleOnSubmit} />
               </Authorized>
             }
           />
@@ -37,7 +37,7 @@ function App() {
             path="/edit-product/:id"
             element={
               <Authorized role="admin">
-                <ProductForm />
+                <ProductForm handleOnSubmit={handleOnSubmit} />
               </Authorized>
             }
           />
