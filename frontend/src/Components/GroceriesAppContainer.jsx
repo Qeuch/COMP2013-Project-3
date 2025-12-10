@@ -4,6 +4,7 @@ import ProductsContainer from "./ProductsContainer";
 import NavBar from "./NavBar";
 import axios from "axios";
 import ProductForm from "./ProductForm";
+import { useNavigate } from "react-router-dom";
 
 export default function GroceriesAppContainer() {
   /////////// States ///////////
@@ -195,6 +196,7 @@ export default function GroceriesAppContainer() {
     setCartList([]);
   };
   /////////Renderer
+  // this stuff might need to be changed with routes in mind
   return (
     <div>
       <NavBar quantity={cartList.length} />
