@@ -53,6 +53,7 @@ export default function ProductForm({
         <button type="submit">{isEditing ? "Edit" : "Submit"}</button>
       </form>
       {postResponse && <p>{postResponse}</p>}
+      <Link to={"/main"}>Take me back to the home page</Link>
     </div>
   );
 }

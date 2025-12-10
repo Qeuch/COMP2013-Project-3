@@ -6,6 +6,8 @@ export default function NavBar({ quantity }) {
       </div>
       <div className="NavDiv NavTitle">
         <h2>Groceries App 🍎</h2>
+        {/* If admin view, show this button */}
+        <button>Add New Product</button>
       </div>
       <div className="NavDiv NavCart">
         <img
