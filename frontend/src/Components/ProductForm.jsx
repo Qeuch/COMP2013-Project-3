@@ -7,7 +7,6 @@ export default function ProductForm({
   postResponse,
   isEditing,
 }) {
-  const navigate = useNavigate();
   return (
     <div className="product-form">
       <h2>Product Form</h2>
@@ -51,9 +50,7 @@ export default function ProductForm({
           onChange={handleOnChange}
         />
         <br />
-        <button type="submit" onClick={() => useNavigate(`/main`)}>
-          {isEditing ? "Edit" : "Submit"}
-        </button>
+        <button type="submit">{isEditing ? "Edit" : "Submit"}</button>
       </form>
       {postResponse && <p>{postResponse}</p>}
     </div>
