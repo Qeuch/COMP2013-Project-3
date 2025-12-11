@@ -2,11 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import FormComponent from "./FormComponent";
 
-export default function NavBar({ quantity, goToAddProduct }) {
+export default function NavBar({ quantity, goToAddProduct, handleLogout }) {
   return (
     <nav className="NavBar">
       <div className="NavDiv NavUser">
         <h3>Hello, username</h3>
+        <button onClick={handleLogout}>Logout</button>
       </div>
       <div className="NavDiv NavTitle">
         <h2>Groceries App 🍎</h2>

@@ -218,6 +218,12 @@ export default function GroceriesAppContainer() {
     setCartList(newCartList);
   };
 
+  const handleLogout = () => {
+    Cookies.remove("jwt-authorization");
+    setCurrentUser("");
+    navigate("/");
+  }
+
   const handleClearCart = () => {
     setCartList([]);
   };
@@ -233,6 +239,7 @@ export default function GroceriesAppContainer() {
               <NavBar
                 quantity={cartList.length}
                 goToAddProduct={goToAddProduct}
+                handleLogout={handleLogout}
               />
               <div className="GroceriesApp-Container">
                 <ProductsContainer
