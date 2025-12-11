@@ -26,8 +26,8 @@ export default function LoginPage() {
       setPostResponse(response.data.message);
 
       if (response.status === 201) {
-        navigate("/main");
         Cookies.set("jwt-authorization", response.data.token);
+        navigate("/main");
       }
     } catch (error) {
       setPostResponse(

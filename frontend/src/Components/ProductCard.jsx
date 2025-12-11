@@ -13,6 +13,7 @@ export default function ProductCard({
   handleEditProduct,
   _id,
   handleDeleteProduct,
+  currentUser,
 }) {
   return (
     <div className="ProductCard">
@@ -28,18 +29,24 @@ export default function ProductCard({
       />
       <h3>{price}</h3>
       <button onClick={() => handleAddToCart(id)}>Add to Cart</button>
-
-      <button
-        id="edit-button"
-        onClick={() =>
-          handleEditProduct({ price, brand, productName, image, _id })
-        }
-      >
-        Edit
-      </button>
-      <button className="RemoveButton" onClick={() => handleDeleteProduct(_id)}>
-        Delete
-      </button>
+      {currentUser === "admin" ? (
+        <>
+          <button
+            id="edit-button"
+            onClick={() =>
+              handleEditProduct({ price, brand, productName, image, _id })
+            }
+          >
+            Edit
+          </button>
+          <button
+            className="RemoveButton"
+            onClick={() => handleDeleteProduct(_id)}
+          >
+            Delete
+          </button>
+        </>
+      ) : null}
     </div>
   );
 }

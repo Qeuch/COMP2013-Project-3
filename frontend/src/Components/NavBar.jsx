@@ -12,12 +12,12 @@ export default function NavBar({ quantity, goToAddProduct, handleLogout }) {
   if (token) {
     try {
       const decoded = jwtDecode(token);
-      currentUser = decoded.username; 
+      currentUser = decoded.username;
     } catch (e) {
       console.error("Invalid token:", e);
     }
   }
-  
+
   return (
     <nav className="NavBar">
       <div className="NavDiv NavUser">
@@ -26,7 +26,9 @@ export default function NavBar({ quantity, goToAddProduct, handleLogout }) {
       </div>
       <div className="NavDiv NavTitle">
         <h2>Groceries App 🍎</h2>
-        <button onClick={goToAddProduct}>Add new product</button>
+        {currentUser === "admin" ? (
+          <button onClick={goToAddProduct}>Add new product</button>
+        ) : null}
       </div>
       <div className="NavDiv NavCart">
         <img
