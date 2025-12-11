@@ -19,39 +19,6 @@ function App() {
 
           <Route path="/create-user" element={<RegisterPage />} />
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-          <Route
-            path="/main"
-            element={
-              <Authorized role='admin'>
-                <GroceriesAppContainer />
-              </Authorized>
-            }
-          />
-          <Route
-            path="/add-product"
-            element={
-              <Authorized role ="admin">
-                <ProductForm />
-              </Authorized>
-            }
-          />
-          <Route
-            path="/edit-product/:id"
-            element={
-              <Authorized role ="admin">
-                <ProductForm />
-              </Authorized>
-            }
-          />
-=======
-          <Route path="/main" element={/*<Authorized role='admin'>*/<GroceriesAppContainer />/*</Authorized>*/}/>
->>>>>>> Stashed changes
-=======
-          <Route path="/main" element={/*<Authorized role='admin'>*/<GroceriesAppContainer />/*</Authorized>*/}/>
->>>>>>> Stashed changes
-
           <Route path="/add-product" element={<Authorized role="admin">
             <ProductForm handleOnSubmit={handleOnSubmit} /></Authorized>}/>
 
