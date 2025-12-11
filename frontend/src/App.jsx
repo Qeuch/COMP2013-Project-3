@@ -15,17 +15,11 @@ function App() {
       <Router>
         <Routes>
 
-          <Route 
-          path="/"
-          element={
-          <LoginPage />
-          } />
+          <Route path="/" element={<LoginPage />} />
 
-          <Route 
-          path="/create-user" 
-          element={<RegisterPage />
-          } />
+          <Route path="/create-user" element={<RegisterPage />} />
 
+<<<<<<< Updated upstream
           <Route
             path="/main"
             element={
@@ -50,16 +44,20 @@ function App() {
               </Authorized>
             }
           />
+=======
+          <Route path="/main" element={/*<Authorized role='admin'>*/<GroceriesAppContainer />/*</Authorized>*/}/>
+>>>>>>> Stashed changes
 
-          <Route 
-          path="/not-authorized" 
-          element={<NotAuthorized />
+          <Route path="/add-product" element={<Authorized role="admin">
+            <ProductForm handleOnSubmit={handleOnSubmit} /></Authorized>}/>
 
-          } />
-          <Route 
-          path="*" 
-          element={<PageNotFound />
-          } />
+          <Route path="/edit-product/:id" element={<Authorized role="admin">
+                <ProductForm handleOnSubmit={handleOnSubmit} /></Authorized>}/>
+
+          <Route path="/not-authorized" element={<NotAuthorized />} />
+
+          <Route path="*" element={<PageNotFound />} />
+          
         </Routes>
       </Router>
     </>
