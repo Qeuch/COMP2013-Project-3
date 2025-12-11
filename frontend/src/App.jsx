@@ -20,6 +20,7 @@ function App() {
           <Route path="/create-user" element={<RegisterPage />} />
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
           <Route
             path="/main"
             element={
@@ -44,6 +45,9 @@ function App() {
               </Authorized>
             }
           />
+=======
+          <Route path="/main" element={/*<Authorized role='admin'>*/<GroceriesAppContainer />/*</Authorized>*/}/>
+>>>>>>> Stashed changes
 =======
           <Route path="/main" element={/*<Authorized role='admin'>*/<GroceriesAppContainer />/*</Authorized>*/}/>
 >>>>>>> Stashed changes
