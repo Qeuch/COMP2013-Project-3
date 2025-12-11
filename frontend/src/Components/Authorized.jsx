@@ -6,8 +6,6 @@ function Authorized({children, role}) {
     const [loading, setLoading] =useState(true);
     const [userRole, setUserRole] = useState(null);
 
-   // const isLoggedIn = localStorage.getItem("user") !== null;
-
     useEffect(() => {
         fetch("http://localhost:5173/check-auth", {
             method: "GET",
