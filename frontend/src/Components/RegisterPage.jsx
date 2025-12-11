@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import FormComponent from "./FormComponent";
 import { useState } from "react";
 import axios from "axios";
@@ -29,11 +28,10 @@ export default function RegisterPage() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    handleRegister();
+    handleRegister()
     setFormData({ username: "", password: "" });
   };
 
-  const navigate = useNavigate();
   return (
     <div>
       <FormComponent
@@ -41,6 +39,8 @@ export default function RegisterPage() {
         postResponse={postResponse}
         handleOnChange={handleOnChange}
         handleOnSubmit={handleOnSubmit}
+        handleRegister={handleRegister}
+        handleLogin={null}
         nextPage="login"
         currentPage="create-user"
       />

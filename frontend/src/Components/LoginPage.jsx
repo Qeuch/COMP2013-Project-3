@@ -6,7 +6,7 @@ import FormComponent from "./FormComponent";
 export default function LoginPage(){
     // States 
     
-    const [formData, setFormData] = useState({username: "", password: ""});
+    const [formData, setFormData] = useState({username: "", hashedPassword: ""});
     const [postResponse, setPostResponse] = useState("");
 
     // Navigate 
@@ -37,15 +37,18 @@ export default function LoginPage(){
     const handleOnSubmit = (e) => {
         e.preventDefault();
         handleLogin();
-        setFormData({username: "", password: ""});
+        setFormData({username: "", hashedPassword: ""});
     }
 
-    return <div>
+    return (
+    <div>
         <FormComponent 
         formData={formData} 
         postResponse={postResponse} 
         handleOnChange={handleOnChange} 
         handleOnSubmit={handleOnSubmit}
+        handleLogin={handleLogin}
+        handleRegister={null}
         nextPage="create-user"
         currentPage="login"
         />
@@ -53,4 +56,5 @@ export default function LoginPage(){
         <p>Not a Member? Click <a href="/create-user">here</a> to join.</p>
 
     </div>
+    );
 } 

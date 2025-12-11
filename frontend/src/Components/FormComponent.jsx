@@ -4,6 +4,8 @@ export default function FormComponent({
     formData,
     handleOnChange,
     handleOnSubmit,
+    handleLogin,
+    handleRegister,
     postResponse,
     currentPage,
     nextPage,
