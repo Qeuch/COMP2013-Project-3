@@ -214,16 +214,16 @@ export default function GroceriesAppContainer() {
   // this stuff might need to be changed with routes in mind
   return (
     <div>
-      <div className="GroceriesApp-Container">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <NavBar
-                  quantity={cartList.length}
-                  goToAddProduct={goToAddProduct}
-                />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <NavBar
+                quantity={cartList.length}
+                goToAddProduct={goToAddProduct}
+              />
+              <div className="GroceriesApp-Container">
                 <ProductsContainer
                   products={productList}
                   handleAddQuantity={handleAddQuantity}
@@ -240,35 +240,35 @@ export default function GroceriesAppContainer() {
                   handleRemoveQuantity={handleRemoveQuantity}
                   handleClearCart={handleClearCart}
                 />
-              </>
-            }
-          />
-          <Route
-            path="add-product"
-            element={
-              <ProductForm
-                handleOnSubmit={handleOnSubmit}
-                postResponse={postResponse}
-                handleOnChange={handleOnChange}
-                formData={formData}
-                isEditing={isEditing}
-              />
-            }
-          />
-          <Route
-            path="edit-product/:id"
-            element={
-              <ProductForm
-                handleOnSubmit={handleOnSubmit}
-                postResponse={postResponse}
-                handleOnChange={handleOnChange}
-                formData={formData}
-                isEditing={isEditing}
-              />
-            }
-          />
-        </Routes>
-      </div>
+              </div>
+            </>
+          }
+        />
+        <Route
+          path="add-product"
+          element={
+            <ProductForm
+              handleOnSubmit={handleOnSubmit}
+              postResponse={postResponse}
+              handleOnChange={handleOnChange}
+              formData={formData}
+              isEditing={isEditing}
+            />
+          }
+        />
+        <Route
+          path="edit-product/:id"
+          element={
+            <ProductForm
+              handleOnSubmit={handleOnSubmit}
+              postResponse={postResponse}
+              handleOnChange={handleOnChange}
+              formData={formData}
+              isEditing={isEditing}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }
