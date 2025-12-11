@@ -41,9 +41,6 @@ export default function FormComponent({
           {currentPage === "login" ? "Login" : "Create User"}
         </button>
       </form>
-
-      <p>{postResponse}</p>
-      
     </div>
   );
 }
