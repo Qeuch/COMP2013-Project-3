@@ -39,7 +39,6 @@ export default function LoginPage() {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     handleLogin();
-    setFormData({ username: "", password: "" });
   };
 
   return (
