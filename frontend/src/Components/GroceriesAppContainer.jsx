@@ -13,6 +13,8 @@ import FilterBox from "./filterBox"; //////////////////////////
 
 export default function GroceriesAppContainer() {
   /////////// States ///////////
+  // useNavigate for new child routes
+  const navigate = useNavigate();
   const [productQuantity, setProductQuantity] = useState();
   const [cartList, setCartList] = useState([]);
   const [productList, setProductList] = useState([]);
@@ -26,14 +28,7 @@ export default function GroceriesAppContainer() {
   });
   const [isEditing, setIsEditing] = useState(false);
 
-  const [currentUser, setCurrentUser] = useState(() => {
-    const jwtToken = Cookies.get("jwt-authorization");
-    const decodedToken = jwtDecode(jwtToken);
-    if (!decodedToken) {
-      return navigate("/not-authorized");
-    }
-    return decodedToken.username;
-  });
+  const [currentUser, setCurrentUser] = useState("");
   // transforms prices to numbers
   const priceSanitizer = (price) => {
     //just as in cars example
@@ -45,6 +40,21 @@ export default function GroceriesAppContainer() {
   useEffect(() => {
     handleProductsFromDB();
   }, [postResponse]);
+
+  useEffect(() => {
+    const token = Cookies.get("jwt-authorization");
+    if (!token) {
+      navigate("/not-authorized");
+    } else {
+      try {
+        const decoded = jwtDecode(token);
+        setCurrentUser(decoded.username);
+      } catch {
+        Cookies.remove("jwt-authorization");
+        navigate("/not-authorized");
+      }
+    }
+  }, []);
 
   ////////Handlers//////////
 
@@ -61,9 +71,6 @@ export default function GroceriesAppContainer() {
       setDisplayProductList(productList);
     }
   };
-
-  // useNavigate for new child routes
-  const navigate = useNavigate();
 
   // function passed into navbar to navigate to edit page
   const goToAddProduct = () => {
@@ -274,6 +281,7 @@ export default function GroceriesAppContainer() {
                   productQuantity={productQuantity}
                   handleEditProduct={handleEditProduct}
                   handleDeleteProduct={handleDeleteProduct}
+                  currentUser={currentUser}
                 />
                 <CartContainer
                   cartList={cartList}
