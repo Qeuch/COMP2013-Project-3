@@ -7,12 +7,14 @@ import ProductForm from "./ProductForm";
 import { useNavigate } from "react-router-dom";
 import FormComponent from "./FormComponent";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import FilterBox from "./filterBox"; //////////////////////////
 
 export default function GroceriesAppContainer() {
   /////////// States ///////////
   const [productQuantity, setProductQuantity] = useState();
   const [cartList, setCartList] = useState([]);
   const [productList, setProductList] = useState([]);
+  const [displayProductList, setDisplayProductList] = useState([]); /////////////////
   const [postResponse, setPostResponse] = useState("");
   const [formData, setFormData] = useState({
     productName: "",
@@ -22,6 +24,12 @@ export default function GroceriesAppContainer() {
   });
   const [isEditing, setIsEditing] = useState(false);
 
+// transforms prices to numbers
+  const priceSanitizer = (price) => { //just as in cars example
+  return Number(String(price).replace("$", "").replace(",", "").trim());
+};
+
+
   //////////useEffect////////
 
   useEffect(() => {
@@ -29,6 +37,20 @@ export default function GroceriesAppContainer() {
   }, [postResponse]);
 
   ////////Handlers//////////
+
+  const handleFilterPrices = (e) => {
+  const maxPrice = e.target.value;
+
+  if (maxPrice !== "all") {
+    setDisplayProductList(
+      productList.filter(
+        (product) => priceSanitizer(product.price) < maxPrice
+      )
+    );
+  } else {
+    setDisplayProductList(productList);
+  }
+};
 
   // useNavigate for new child routes
   const navigate = useNavigate();
@@ -47,7 +69,9 @@ export default function GroceriesAppContainer() {
   const handleProductsFromDB = async () => {
     try {
       await axios.get("http://localhost:3000/products").then((result) => {
+     
         setProductList(result.data);
+        setDisplayProductList(result.data);
         setProductQuantity(initialProductQuantity(result.data));
       });
     } catch (error) {
@@ -108,7 +132,7 @@ export default function GroceriesAppContainer() {
   const handleUpdateProduct = async (productId) => {
     try {
       await axios
-        .patch(`http://localhost:3000/edit-product/${productId}`, formData)
+        .patch(`http://localhost:3000/products/${productId}`, formData)
         .then((result) => {
           setPostResponse(result.data);
         });
@@ -223,9 +247,11 @@ export default function GroceriesAppContainer() {
                 quantity={cartList.length}
                 goToAddProduct={goToAddProduct}
               />
-              <div className="GroceriesApp-Container">
+
+               <FilterBox handleFilterPrices={handleFilterPrices} />
+              <div className="GroceriesApp-Container"> 
                 <ProductsContainer
-                  products={productList}
+                  products={displayProductList} 
                   handleAddQuantity={handleAddQuantity}
                   handleRemoveQuantity={handleRemoveQuantity}
                   handleAddToCart={handleAddToCart}
