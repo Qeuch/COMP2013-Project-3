@@ -19,6 +19,7 @@ export default function LoginPage() {
     }));
   };
 
+  // login handler specific to this component
   const handleLogin = async () => {
     try {
       const response = await axios.post("http://localhost:3000/", formData);

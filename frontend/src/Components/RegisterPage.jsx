@@ -28,13 +28,14 @@ export default function RegisterPage() {
     }
   };
 
+  // handle submit register information
   const handleOnSubmit = (e) => {
     e.preventDefault();
     handleRegister();
     setFormData({ username: "", password: "" });
   };
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // i don't think this is necessary but I'm scared to touch it
   return (
     <div>
       <FormComponent

@@ -59,6 +59,7 @@ export default function GroceriesAppContainer() {
 
   ////////Handlers//////////
 
+  // pablo's really cool filter for prices
   const handleFilterPrices = (e) => {
     const maxPrice = e.target.value;
 

@@ -56,6 +56,7 @@ export default function ProductForm({
       {postResponse && <p>{postResponse.message}</p>}
       <Link
         to="/main"
+        // resets the form if aborted edit
         onClick={() => {
           resetForm();
         }}
