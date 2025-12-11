@@ -108,7 +108,7 @@ export default function GroceriesAppContainer() {
   const handleUpdateProduct = async (productId) => {
     try {
       await axios
-        .patch(`http://localhost:3000/products/${productId}`, formData)
+        .patch(`http://localhost:3000/edit-product/${productId}`, formData)
         .then((result) => {
           setPostResponse(result.data);
         });

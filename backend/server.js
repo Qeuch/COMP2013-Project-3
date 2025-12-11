@@ -8,6 +8,7 @@ const Product = require("./models/product");
 const User = require("./models/user");
 require("dotenv").config();
 const { DB_URI } = process.env;
+const { SECRET_KEY } = process.env;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -45,19 +46,12 @@ server.get("/products", async (request, response) => {
   console.log("GET /products hit");
   try {
     await Product.find().then((result) => response.status(200).send(result));
-    console.log(result);
   } catch (error) {
     console.log(error.message);
   }
 });
 
 //Add product
-
-// this catch-all needs to be at the very end of the routes, fix required
-server.get("*", (request, response) => {
-  response.status(401);
-  response.send("NO SUCH PAGE!");
-});
 
 //Register new user route
 server.post("/create-user", async (request, response) => {
@@ -92,10 +86,9 @@ server.post("/add-product", async (request, response) => {
   });
 
   //Server's response to product being added
-  // adding newUser instead of product here, fix required
   try {
-    await newUser.save();
-    response.status(201).json({ message: "User added successfully" });
+    await product.save();
+    response.status(201).json({ message: "Product added successfully" });
   } catch (error) {
     response.status(400).json({ message: error.message });
   }
@@ -121,7 +114,6 @@ server.patch("/edit-product/:id", async (request, response) => {
 
   //Server's response to item being editted
   try {
-    // i think prodId here is from the crypto uuid, but it might need to be the mongo _id. Not sure, check just in case
     await Product.findByIdAndUpdate(prodId, {
       productName,
       brand,
@@ -154,8 +146,7 @@ server.post("/login", async (request, response) => {
     }
 
     const jwtToken = jwt.sign(
-      // i think this is meant to say user._id, not user._id_ so a fix might be required. secret_key also never imported from .env
-      { id: user._id_, username, role: user.role },
+      { id: user._id, username, role: user.role },
       SECRET_KEY
     );
     return response
@@ -164,4 +155,10 @@ server.post("/login", async (request, response) => {
   } catch (error) {
     response.status(500).send({ message: error.message });
   }
+});
+
+// this catch-all needs to be at the very end of the routes
+server.get("*", (request, response) => {
+  response.status(401);
+  response.send("NO SUCH PAGE!");
 });
