@@ -24,7 +24,7 @@ export default function LoginPage() {
 
       setPostResponse(response.data.message);
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         navigate("/main");
       }
     } catch (error) {

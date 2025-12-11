@@ -28,9 +28,9 @@ mongoose
     console.log(error);
   });
 
-server.get("/", (request, response) => {
-  response.send("LIVE!");
-});
+// server.get("/", (request, response) => {
+//   response.send("LIVE!");
+// });
 
 //Display products
 server.get("/main", (request, response) => {
@@ -129,7 +129,7 @@ server.patch("/edit-product/:id", async (request, response) => {
 });
 
 //Login existing user route
-server.post("/login", async (request, response) => {
+server.post("/", async (request, response) => {
   const { username, password } = request.body;
 
   try {
