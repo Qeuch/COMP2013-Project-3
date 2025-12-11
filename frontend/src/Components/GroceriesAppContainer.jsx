@@ -26,11 +26,15 @@ export default function GroceriesAppContainer() {
 
   const [currentUser, setCurrentUser] = useState(() => {
     const jwtToken = Cookies.get("jwt-authorization");
-    const decodedToken = jwtDecode(jwtToken);
-    if (!decodedToken) {
-      return navigate("/not-authorized");
+    if (!jwtToken) {
+      return "";
     }
-    return decodedToken.username;
+    try {
+      const decodedToken = jwtDecode(jwtToken);
+      return decodedToken.username;
+    } catch {
+      return "";
+    }
   });
 
   //////////useEffect////////
@@ -38,6 +42,12 @@ export default function GroceriesAppContainer() {
   useEffect(() => {
     handleProductsFromDB();
   }, [postResponse]);
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/");
+    }
+  });
 
   ////////Handlers//////////
 
@@ -222,7 +232,7 @@ export default function GroceriesAppContainer() {
     Cookies.remove("jwt-authorization");
     setCurrentUser("");
     navigate("/");
-  }
+  };
 
   const handleClearCart = () => {
     setCartList([]);
