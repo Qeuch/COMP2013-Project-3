@@ -9,6 +9,7 @@ const User = require("./models/user");
 require("dotenv").config();
 const { DB_URI } = process.env;
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 server.use(cors());
 server.use(express.json());
@@ -56,16 +57,25 @@ server.get("*", (request, response) => {
   response.send("NO SUCH PAGE!");
 });
 
+//Register new user route
 server.post("/create-user", async (request, response) => {
   const { username, password } = request.body;
-  const id = crypto.randomUUID();
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  const user = new User({
-    id,
-    username,
-    hashedPassword,
-  });
+  try {
+    //Hashing a password need bcrypt and salt rounds as an int
+    const id = crypto.randomUUID();
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      id,
+      username,
+      password: hashedPassword,
+    });
+    await newUser.save();
+    response.send({ message: "User Created!" });
+  } catch (error) {
+    response
+      .status(500)
+      .send({ message: "User Already Exists, please find another username" });
+  }
 });
 
 server.post("/add-product", async (request, response) => {
@@ -119,5 +129,31 @@ server.patch("/edit-product/:id", async (request, response) => {
     );
   } catch (error) {
     console.log(error.message);
+  }
+});
+
+//Login existing user route
+server.post("/", async (request, response) => {
+  const { username, password } = request.body;
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return response.status(404).send({ message: "User does not exist" });
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return response
+        .status(403)
+        .send({ message: "Incorrect username or password" });
+    }
+
+    const jwtToken = jwt.sign({ id: user._id_, username, role: user.role }, SECRET_KEY);
+    return response
+      .status(201)
+      .send({ message: "User Authenticated", token: jwtToken });
+  } catch (error) {
+    response.status(500).send({ message: error.message });
   }
 });
