@@ -51,7 +51,7 @@ export default function LoginPage() {
         nextPage="create-user"
         currentPage="login"
       />
-
+      <p>{postResponse}</p>
       <p>
         Not a Member? Click <a href="/create-user">here</a> to join.
       </p>
