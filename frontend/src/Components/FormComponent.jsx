@@ -30,18 +30,20 @@ export default function FormComponent({
         <br />
         <label htmlFor="password">Password</label>
         <input
-          type="text"
+          type="password"
           name="password"
           id="password"
           value={formData.password}
           onChange={handleOnChange}
         />
+        <br />
+        <button type="submit">
+          {currentPage === "login" ? "Login" : "Create User"}
+        </button>
       </form>
 
       <p>{postResponse}</p>
-      <button onClick={() => navigate(`/${currentPage}`)}>
-        {currentPage === "login" ? "Login" : "Create User"}
-      </button>
+      
     </div>
   );
 }

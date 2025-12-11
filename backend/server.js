@@ -61,7 +61,7 @@ server.post("/create-user", async (request, response) => {
     const id = crypto.randomUUID();
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
-      id,
+      _id: id,
       username,
       password: hashedPassword,
     });
