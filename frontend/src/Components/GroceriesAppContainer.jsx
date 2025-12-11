@@ -41,6 +41,7 @@ export default function GroceriesAppContainer() {
     handleProductsFromDB();
   }, [postResponse]);
 
+  // useEffect for authentication. Refer to lecture 11
   useEffect(() => {
     const token = Cookies.get("jwt-authorization");
     if (!token) {
@@ -128,6 +129,17 @@ export default function GroceriesAppContainer() {
         console.log(error.message);
       }
     }
+  };
+
+  // function to reset the form if the editing process is aborted
+  const resetForm = () => {
+    setFormData({
+      productName: "",
+      brand: "",
+      image: "",
+      price: "",
+    });
+    setIsEditing(false);
   };
 
   const handleEditProduct = (product) => {
@@ -269,10 +281,12 @@ export default function GroceriesAppContainer() {
                 quantity={cartList.length}
                 goToAddProduct={goToAddProduct}
                 handleLogout={handleLogout}
+                currentUser={currentUser}
               />
 
-              <FilterBox handleFilterPrices={handleFilterPrices} />
               <div className="GroceriesApp-Container">
+                {/* Moved filter box inside the container for css purposes */}
+                <FilterBox handleFilterPrices={handleFilterPrices} />
                 <ProductsContainer
                   products={displayProductList}
                   handleAddQuantity={handleAddQuantity}
@@ -282,6 +296,7 @@ export default function GroceriesAppContainer() {
                   handleEditProduct={handleEditProduct}
                   handleDeleteProduct={handleDeleteProduct}
                   currentUser={currentUser}
+                  resetForm={resetForm}
                 />
                 <CartContainer
                   cartList={cartList}
@@ -303,6 +318,7 @@ export default function GroceriesAppContainer() {
               handleOnChange={handleOnChange}
               formData={formData}
               isEditing={isEditing}
+              resetForm={resetForm}
             />
           }
         />
@@ -315,6 +331,7 @@ export default function GroceriesAppContainer() {
               handleOnChange={handleOnChange}
               formData={formData}
               isEditing={isEditing}
+              resetForm={resetForm}
             />
           }
         />

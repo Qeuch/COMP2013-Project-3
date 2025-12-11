@@ -1,23 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import FormComponent from "./FormComponent";
-import { jwtDecode } from "jwt-decode";
-import Cookies from "js-cookie";
+// import { useNavigate } from "react-router-dom";
+// import { Link } from "react-router-dom";
+// import FormComponent from "./FormComponent";
+// import { jwtDecode } from "jwt-decode";
+// import Cookies from "js-cookie";
 
-export default function NavBar({ quantity, goToAddProduct, handleLogout }) {
-  let currentUser = "Guest";
+// none of the imports were necessary here, so I removed them -- damien <3
 
-  const token = Cookies.get("jwt-authorization");
-
-  if (token) {
-    try {
-      const decoded = jwtDecode(token);
-      currentUser = decoded.username;
-    } catch (e) {
-      console.error("Invalid token:", e);
-    }
-  }
-
+export default function NavBar({
+  quantity,
+  goToAddProduct,
+  handleLogout,
+  currentUser,
+}) {
   return (
     <nav className="NavBar">
       <div className="NavDiv NavUser">
@@ -26,6 +20,7 @@ export default function NavBar({ quantity, goToAddProduct, handleLogout }) {
       </div>
       <div className="NavDiv NavTitle">
         <h2>Groceries App 🍎</h2>
+        {/* Ternary for admin powers */}
         {currentUser === "admin" ? (
           <button onClick={goToAddProduct}>Add new product</button>
         ) : null}

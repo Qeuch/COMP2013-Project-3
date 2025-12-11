@@ -6,6 +6,7 @@ export default function ProductForm({
   formData,
   postResponse,
   isEditing,
+  resetForm,
 }) {
   return (
     <div className="product-form">
@@ -53,7 +54,14 @@ export default function ProductForm({
         <button type="submit">{isEditing ? "Edit" : "Submit"}</button>
       </form>
       {postResponse && <p>{postResponse.message}</p>}
-      <Link to={"/main"}>Take me back to the home page</Link>
+      <Link
+        to="/main"
+        onClick={() => {
+          resetForm();
+        }}
+      >
+        Take me back to the home page
+      </Link>
     </div>
   );
 }
