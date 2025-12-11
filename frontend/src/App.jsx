@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GroceriesAppContainer from "./Components/GroceriesAppContainer";
 import LoginPage from "./Components/LoginPage.jsx";
 import RegisterPage from "./Components/RegisterPage.jsx";
-import ProductForm from "./Components/ProductForm.jsx";
 import NotAuthorized from "./Components/NotAuthorized.jsx";
 import PageNotFound from "./Components/PageNotFound.jsx";
 import Authorized from "./Components/Authorized.jsx";
@@ -20,13 +19,7 @@ function App() {
 
           <Route
             // Changed this to /main/* as the component now has child routes
-            path="/main/*"
-            element={
-              //<Authorized role='admin'>
-              <GroceriesAppContainer />
-              //</Authorized>
-            }
-          />
+            path="/main/*" element={/*<Authorized role='admin'>*/<GroceriesAppContainer />/*</Authorized>*/}/>
 
           <Route path="/not-authorized" element={<NotAuthorized />} />
           <Route path="*" element={<PageNotFound />} />
