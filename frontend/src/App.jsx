@@ -14,52 +14,22 @@ function App() {
     <>
       <Router>
         <Routes>
+          <Route path="/" element={<LoginPage />} />
 
-          <Route 
-          path="/"
-          element={
-          <LoginPage />
-          } />
-
-          <Route 
-          path="/create-user" 
-          element={<RegisterPage />
-          } />
+          <Route path="/create-user" element={<RegisterPage />} />
 
           <Route
-            path="/main"
+            // Changed this to /main/* as the component now has child routes
+            path="/main/*"
             element={
               //<Authorized role='admin'>
               <GroceriesAppContainer />
               //</Authorized>
             }
           />
-          <Route
-            path="/add-product"
-            element={
-              <Authorized role="admin">
-                <ProductForm handleOnSubmit={handleOnSubmit} />
-              </Authorized>
-            }
-          />
-          <Route
-            path="/edit-product/:id"
-            element={
-              <Authorized role="admin">
-                <ProductForm handleOnSubmit={handleOnSubmit} />
-              </Authorized>
-            }
-          />
 
-          <Route 
-          path="/not-authorized" 
-          element={<NotAuthorized />
-
-          } />
-          <Route 
-          path="*" 
-          element={<PageNotFound />
-          } />
+          <Route path="/not-authorized" element={<NotAuthorized />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </>

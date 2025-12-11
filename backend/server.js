@@ -149,7 +149,10 @@ server.post("/login", async (request, response) => {
         .send({ message: "Incorrect username or password" });
     }
 
-    const jwtToken = jwt.sign({ id: user._id_, username, role: user.role }, SECRET_KEY);
+    const jwtToken = jwt.sign(
+      { id: user._id_, username, role: user.role },
+      SECRET_KEY
+    );
     return response
       .status(201)
       .send({ message: "User Authenticated", token: jwtToken });
