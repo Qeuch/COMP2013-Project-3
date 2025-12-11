@@ -23,6 +23,7 @@ export default function FormComponent({
           type="text"
           name="username"
           id="username"
+          placeholder="Username"
           value={formData.username}
           onChange={handleOnChange}
         />
@@ -33,6 +34,7 @@ export default function FormComponent({
           type="password"
           name="password"
           id="password"
+          placeholder="Password"
           value={formData.password}
           onChange={handleOnChange}
         />

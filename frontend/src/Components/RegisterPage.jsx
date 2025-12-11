@@ -24,6 +24,7 @@ export default function RegisterPage() {
       setPostResponse(response.data.message);
     } catch (error) {
       console.log(error);
+      setPostResponse(error.response?.data?.message || "Something went wrong.");
     }
   };
 
