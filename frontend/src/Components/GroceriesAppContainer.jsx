@@ -7,6 +7,8 @@ import ProductForm from "./ProductForm";
 import { useNavigate } from "react-router-dom";
 import FormComponent from "./FormComponent";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 export default function GroceriesAppContainer() {
   /////////// States ///////////
@@ -21,6 +23,15 @@ export default function GroceriesAppContainer() {
     price: "",
   });
   const [isEditing, setIsEditing] = useState(false);
+
+  const [currentUser, setCurrentUser] = useState(() => {
+    const jwtToken = Cookies.get("jwt-authorization");
+    const decodedToken = jwtDecode(jwtToken);
+    if (!decodedToken) {
+      return navigate("/not-authorized");
+    }
+    return decodedToken.username;
+  });
 
   //////////useEffect////////
 
