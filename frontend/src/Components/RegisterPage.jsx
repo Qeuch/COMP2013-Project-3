@@ -1,15 +1,10 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-don";
+import { useNavigate } from "react-router-dom";
 import FormComponent from "./FormComponent";
 import { useState } from "react";
 import axios from "axios";
 
-export default function RegisterPage({
-  handleOnSubmit,
-  postResponse,
-  formData,
-}) {
+export default function RegisterPage() {
   //States
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [postResponse, setPostResponse] = useState("");
@@ -41,12 +36,13 @@ export default function RegisterPage({
   const navigate = useNavigate();
   return (
     <div>
-      <h3>Create a New User</h3>
       <FormComponent
-        FormData={formData}
+        formData={formData}
         postResponse={postResponse}
         handleOnChange={handleOnChange}
         handleOnSubmit={handleOnSubmit}
+        nextPage="login"
+        currentPage="create-user"
       />
       <p>{postResponse}</p>
       <Link to="/">Back to Login Page</Link>

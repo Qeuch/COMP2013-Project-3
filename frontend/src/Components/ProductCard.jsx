@@ -28,6 +28,7 @@ export default function ProductCard({
       />
       <h3>{price}</h3>
       <button onClick={() => handleAddToCart(id)}>Add to Cart</button>
+
       <button
         id="edit-button"
         onClick={() =>

@@ -8,6 +8,7 @@ const Product = require("./models/product");
 const User = require("./models/user");
 require("dotenv").config();
 const { DB_URI } = process.env;
+const { SECRET_KEY } = process.env;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -27,9 +28,9 @@ mongoose
     console.log(error);
   });
 
-server.get("/", (request, response) => {
-  response.send("LIVE!");
-});
+// server.get("/", (request, response) => {
+//   response.send("LIVE!");
+// });
 
 //Display products
 server.get("/main", (request, response) => {
@@ -45,28 +46,32 @@ server.get("/products", async (request, response) => {
   console.log("GET /products hit");
   try {
     await Product.find().then((result) => response.status(200).send(result));
-    console.log(result);
   } catch (error) {
     console.log(error.message);
   }
 });
 
 //Add product
-server.get("*", (request, response) => {
-  response.status(401);
-  response.send("NO SUCH PAGE!");
-});
 
+//Register new user route
 server.post("/create-user", async (request, response) => {
   const { username, password } = request.body;
-  const id = crypto.randomUUID();
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  const user = new User({
-    id,
-    username,
-    hashedPassword,
-  });
+  try {
+    //Hashing a password need bcrypt and salt rounds as an int
+    const id = crypto.randomUUID();
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      _id: id,
+      username,
+      password: hashedPassword,
+    });
+    await newUser.save();
+    response.send({ message: "User Created!" });
+  } catch (error) {
+    response
+      .status(500)
+      .send({ message: "User Already Exists, please find another username" });
+  }
 });
 
 server.post("/add-product", async (request, response) => {
@@ -82,8 +87,8 @@ server.post("/add-product", async (request, response) => {
 
   //Server's response to product being added
   try {
-    await newUser.save();
-    response.status(201).json({ message: "User added successfully" });
+    await product.save();
+    response.status(201).json({ message: "Product added successfully" });
   } catch (error) {
     response.status(400).json({ message: error.message });
   }
@@ -124,7 +129,7 @@ server.patch("/edit-product/:id", async (request, response) => {
 });
 
 //Login existing user route
-server.post("/login", async (request, response) => {
+server.post("/", async (request, response) => {
   const { username, password } = request.body;
 
   try {
@@ -140,11 +145,20 @@ server.post("/login", async (request, response) => {
         .send({ message: "Incorrect username or password" });
     }
 
-    const jwtToken = jwt.sign({ id: user._id, username }, SECRET_KEY);
+    const jwtToken = jwt.sign(
+      { id: user._id, username, role: user.role },
+      SECRET_KEY
+    );
     return response
       .status(201)
       .send({ message: "User Authenticated", token: jwtToken });
   } catch (error) {
     response.status(500).send({ message: error.message });
   }
+});
+
+// this catch-all needs to be at the very end of the routes
+server.get("*", (request, response) => {
+  response.status(401);
+  response.send("NO SUCH PAGE!");
 });

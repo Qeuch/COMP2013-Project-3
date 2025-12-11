@@ -1,12 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function NavBar({ quantity, isEditing }) {
-  const navigate = useNavigate();
-
-  const goToForm = () => {
-    navigate("/ProductForm", setIsEditing(true));
-  };
-
+export default function NavBar({ quantity, goToAddProduct }) {
   return (
     <nav className="NavBar">
       <div className="NavDiv NavUser">
@@ -14,12 +9,12 @@ export default function NavBar({ quantity, isEditing }) {
       </div>
       <div className="NavDiv NavTitle">
         <h2>Groceries App 🍎</h2>
-        {isAdmin ? <button onClick={goToForm()}>Add new product</button> : null}
+        <button onClick={goToAddProduct}>Add new product</button>
       </div>
       <div className="NavDiv NavCart">
         <img
           src={
-            quantity > 0
+            quantity.length > 0
               ? "src/assets/cart-full.png"
               : "src/assets/cart-empty.png"
           }

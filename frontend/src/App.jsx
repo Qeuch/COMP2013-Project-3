@@ -13,7 +13,6 @@ function App() {
     <>
       <Router>
         <Routes>
-
           <Route path="/" element={<LoginPage />} />
 
           <Route path="/create-user" element={<RegisterPage />} />
@@ -31,7 +30,6 @@ function App() {
 >>>>>>> Stashed changes
 
           <Route path="/not-authorized" element={<NotAuthorized />} />
-
           <Route path="*" element={<PageNotFound />} />
 <<<<<<< Updated upstream
           

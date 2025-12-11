@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function ProductForm({
   handleOnSubmit,
@@ -52,7 +52,7 @@ export default function ProductForm({
         <br />
         <button type="submit">{isEditing ? "Edit" : "Submit"}</button>
       </form>
-      {postResponse && <p>{postResponse}</p>}
+      {postResponse && <p>{postResponse.message}</p>}
       <Link to={"/main"}>Take me back to the home page</Link>
     </div>
   );
