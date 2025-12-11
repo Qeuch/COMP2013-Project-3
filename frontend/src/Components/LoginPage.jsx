@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import FormComponent from "./FormComponent";
+import Cookies from "js-cookie";
 
 export default function LoginPage() {
   // States
@@ -26,6 +27,7 @@ export default function LoginPage() {
 
       if (response.status === 201) {
         navigate("/main");
+        Cookies.set("jwt-authorization", response.data.token);
       }
     } catch (error) {
       setPostResponse(
