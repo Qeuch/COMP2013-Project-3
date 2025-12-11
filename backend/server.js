@@ -55,6 +55,7 @@ server.get("/products", async (request, response) => {
 
 //Register new user route
 server.post("/create-user", async (request, response) => {
+  console.log(request.body);
   const { username, password } = request.body;
   try {
     //Hashing a password need bcrypt and salt rounds as an int
@@ -68,6 +69,7 @@ server.post("/create-user", async (request, response) => {
     await newUser.save();
     response.send({ message: "User Created!" });
   } catch (error) {
+    console.log(error);
     response
       .status(500)
       .send({ message: "User Already Exists, please find another username" });
