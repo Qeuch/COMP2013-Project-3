@@ -28,7 +28,7 @@ export default function NavBar({
       <div className="NavDiv NavCart">
         <img
           src={
-            quantity.length > 0
+            quantity > 0
               ? "src/assets/cart-full.png"
               : "src/assets/cart-empty.png"
           }
